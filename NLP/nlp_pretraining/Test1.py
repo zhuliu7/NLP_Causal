@@ -1,0 +1,9 @@
+print('Git OK!')
+print('Git OK!')
+print('Git OK!')
+print('Git OK!')
+print('Git OK!')
+print('Git OK!')
+print('Git OK!')
+print('Git OK!')
+# 启动！
