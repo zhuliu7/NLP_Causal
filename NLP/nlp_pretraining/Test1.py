@@ -1,9 +1,2 @@
-print('Git OK!')
-print('Git OK!')
-print('Git OK!')
-print('Git OK!')
-print('Git OK!')
-print('Git OK!')
-print('Git OK!')
-print('Git OK!')
-# 启动！
+test = idx_to_token = ['<unk>'] + []
+print(test)
