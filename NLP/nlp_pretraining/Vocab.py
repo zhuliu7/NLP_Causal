@@ -52,16 +52,41 @@ class Vocab:
             reserved_tokens = []
         # 第一步tokens计数并且倒序排列
         counter = count_corpus(tokens)
-        # 直接定义property
+        # 直接定义property，_token_fres存放了{token : freq}
         self._token_fres =  sorted(counter.items(), key=lambda x : x[1], reverse=True)
         # 这里只是定义了这个数组还没有开始初始化
-        self._idx_to_token = ['<unk>'] + reserved_tokens
-
+        self.idx_to_token = ['<unk>'] + reserved_tokens
+        # 这里最后返回了一个字典，上面的 index_to_token 数组天然可以实现下标到token的索引
+        self.token_to_index = {token : idx for idx, token in enumerate(self.idx_to_token)}
+        # 依然没有读懂他的意思
+        self.idx_to_token,self.token_to_index = [], dict()
+        # 重建词表是因为要去除低频率的词汇
+        for token,freq in self._token_fres:
+            # 小于频次的直接cut
+            if freq < min_freq:
+                break
+            # 为什么要使用self.token_to_index作为判别 是因为他是一个dict()
+            if token not in self.token_to_index:
+                self.idx_to_token.append(token)
+                self.token_to_index[token] = len(self.idx_to_token) - 1
     # 类中的get方法都是使用魔法方法
 
     # 获得长度
     def __len__(self):
-        return len()
+        return len(self.idx_to_token)
+
+    # 注意这个方法  获得某一个元素使用递归的方法
+    # 目标是根据tokens返回对应的idx，设置unk的作用是我们在手工输入token的时候难免会有别的未登录词
+    def __getitem__(self, tokens):
+        # 这个条件判断语句检查输入的 tokens 是否为列表或元组 这个才是真实的意思
+        if not isinstance(tokens, (list,tuple)):
+            # 这个因该是集合中的固有方法，先get(tokens)有的话得到下标没有的话返回0
+            # 最后应该是把所有的获得的元素append了起来
+            return self.token_to_index.get(tokens,self.unk)
+        return [self.__getitem__(self, token) for token in tokens]
+
+
+
 
 
     # 定义未知词元
