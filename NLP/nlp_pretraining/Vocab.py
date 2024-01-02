@@ -19,11 +19,11 @@ def read_sentences(filePath):
 
 curPath = os.getcwd()
 # join的路径是认识相对路径的
-filePath = os.path.join(curPath, config.get('file_path'))
-print(filePath)
-lines = read_sentences(filePath)
-print(lines[:10])
-print(len(lines))
+# filePath = os.path.join(curPath, config.get('file_path'))
+# print(filePath)
+# lines = read_sentences(filePath)
+# print(lines[:10])
+# print(len(lines))
 
 # 第二部：tokenize 目标就是将句子变成二维数组
 def tokenize(lines):
@@ -31,7 +31,7 @@ def tokenize(lines):
     # 下面的这种写法是创的写法但不是标准的写法，下面的vocab中的token的写法是正统的写法
     return [[string for string in line.split() if string.strip()] for line in lines]
 
-print(tokenize(lines)[:10])
+# print(tokenize(lines)[:10])
 
 
 # 第三部构建词表
@@ -85,9 +85,11 @@ class Vocab:
             return self.token_to_index.get(tokens,self.unk)
         return [self.__getitem__(self, token) for token in tokens]
 
-
-
-
+    # 还有一个就是根据多个下标返回对应的tokens
+    def to_tokens(self, indices):
+        if not isinstance(indices,(list,tuple)):
+            return self.idx_to_token[indices]
+        return [self.idx_to_token[idx] for idx in indices]
 
     # 定义未知词元
     @property
