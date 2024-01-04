@@ -16,4 +16,6 @@
 ## bert
     今天先跑通Bert和将模型保存与加载
 
+## sum语言模型的基本架构
+   <img width="661" alt="image" src="https://github.com/zhuliu7/NLP_Causal/assets/28768885/9f422c32-37b4-42d2-8f9b-122b9c96beef">
 
